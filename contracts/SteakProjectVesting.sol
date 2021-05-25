@@ -31,13 +31,13 @@ contract SteakProjectVesting is Ownable {
     uint256 SCALING_FACTOR = 10 ** 18; // decimals
     
     // Token amount that should be distributed from week 13 until week 18
-    uint256 public FROM_13_TILL_18_WEEKS = 1883700 * SCALING_FACTOR;
+    uint256 public FROM_13_TILL_18_WEEKS = 33333 * SCALING_FACTOR;
     
     // Token amount that should be distributed from week 19 until week 155
-    uint256 public FROM_19_TILL_155_WEEKS = 188370 * SCALING_FACTOR;
+    uint256 public FROM_19_TILL_155_WEEKS = 2920 * SCALING_FACTOR;
     
     // Remainig tokens that are left after week 155
-    uint256 public FOR_156_WEEK = 151110 * SCALING_FACTOR;
+    uint256 public FOR_156_WEEK = 1000 * SCALING_FACTOR;
     
     uint256 week = 1 weeks;
     
@@ -122,6 +122,7 @@ contract SteakProjectVesting is Ownable {
     // In a case when there are some Steak tokens left on a contract this function allows the contract owner to retrieve excess tokens
     function retrieveExcessTokens(uint256 _amount) external onlyOwner {
         require(_amount <= steakToken.balanceOf(address(this)), INSUFFICIENT_BALANCE);
+        require(block.timestamp > creationTime + 156 weeks);
         steakToken.safeTransfer(owner(), _amount);
     }
     
