@@ -5,7 +5,6 @@ pragma solidity ^0.8.0;
 import "./ERC20/IERC20.sol";
 import "./utils/Ownable.sol";
 import "./ERC20/SafeERC20.sol";
-import "hardhat/console.sol";
 
 // SteakHouseV2 provides multi-token rewards for the farms of Stake Steak
 // This contract is forked from Popsicle.finance which is a fork of SushiSwap's MasterChef Contract
@@ -82,6 +81,7 @@ contract SteakHouseV2 is Ownable {
         uint256[] memory _RewardsPerSecond,
         uint32 _startTime
     ) {
+        require(_RewardTokens.length == 5 && _RewardsPerSecond.length == 5);
         RewardTokens = _RewardTokens;
 
         RewardsPerSecond = _RewardsPerSecond;
@@ -146,8 +146,7 @@ contract SteakHouseV2 is Ownable {
         IERC20 _stakingToken,
         bool _withUpdate
     ) external onlyOwner {
-        // uint256[] memory alloc = new uint256[](2);
-        // console.log();
+        require(_AllocPoints.length == 5);
         if (_withUpdate) {
             massUpdatePools();
         }
@@ -174,6 +173,7 @@ contract SteakHouseV2 is Ownable {
         uint256[] calldata _AllocPoints,
         bool _withUpdate
     ) external onlyOwner {
+        require(_AllocPoints.length == 5);
         if (_withUpdate) {
             massUpdatePools();
         }
@@ -200,6 +200,7 @@ contract SteakHouseV2 is Ownable {
         external
         onlyOwner
     {
+        require(_RewardTokens.length == 5);
         RewardTokens = _RewardTokens;
     }
 
